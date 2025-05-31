@@ -525,9 +525,85 @@
           left: 0;
         }
       }
+
+      /* Audio Player Styles */
+      .audio-player {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1000;
+      }
+
+      .music-btn {
+        background: linear-gradient(45deg, #ff69b4, #ff1744);
+        border: none;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        font-size: 24px;
+        color: white;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(255, 105, 180, 0.4);
+        transition: all 0.3s ease;
+        animation: musicPulse 2s ease-in-out infinite;
+      }
+
+      .music-btn:hover {
+        transform: scale(1.1);
+        box-shadow: 0 6px 20px rgba(255, 105, 180, 0.6);
+      }
+
+      .music-btn.playing {
+        background: linear-gradient(45deg, #4caf50, #45a049);
+        animation: musicPulse 1s ease-in-out infinite;
+      }
+
+      .music-btn.paused {
+        background: linear-gradient(45deg, #f44336, #da190b);
+        animation: none;
+      }
+
+      @keyframes musicPulse {
+        0%,
+        100% {
+          box-shadow: 0 4px 15px rgba(255, 105, 180, 0.4);
+        }
+        50% {
+          box-shadow: 0 4px 25px rgba(255, 105, 180, 0.8),
+            0 0 30px rgba(255, 105, 180, 0.6);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .audio-player {
+          top: 10px;
+          right: 10px;
+        }
+
+        .music-btn {
+          width: 50px;
+          height: 50px;
+          font-size: 20px;
+        }
+      }
     </style>
   </head>
   <body>
+    <!-- Audio Player -->
+    <div class="audio-player">
+      <audio id="backgroundMusic" loop preload="auto">
+        <source src="LeDuong-KaiDinh-35863164.mp3" type="audio/mp3" />
+        Your browser does not support the audio element.
+      </audio>
+      <button
+        id="musicToggle"
+        class="music-btn"
+        title="Click to play/pause music"
+      >
+        🎵
+      </button>
+    </div>
+
     <h1 class="bouncing-title">
       Chúc mừng Quốc tế thiếu nhi embee Thanh Tammmmm
     </h1>
@@ -907,12 +983,81 @@
           span.style.animationDelay = index * 0.1 + "s";
           title.appendChild(span);
         });
-      } // Initialize all effects
+      } // Music control functionality
+      function initMusicPlayer() {
+        const audio = document.getElementById("backgroundMusic");
+        const musicBtn = document.getElementById("musicToggle");
+        let isPlaying = false;
+
+        // Set initial volume
+        audio.volume = 0.3;
+
+        musicBtn.addEventListener("click", function () {
+          if (isPlaying) {
+            audio.pause();
+            musicBtn.textContent = "🎵";
+            musicBtn.classList.remove("playing");
+            musicBtn.classList.add("paused");
+            isPlaying = false;
+          } else {
+            audio
+              .play()
+              .then(() => {
+                musicBtn.textContent = "🎶";
+                musicBtn.classList.remove("paused");
+                musicBtn.classList.add("playing");
+                isPlaying = true;
+              })
+              .catch((error) => {
+                console.log("Error playing audio:", error);
+                musicBtn.textContent = "❌";
+              });
+          }
+        });
+
+        // Handle audio events
+        audio.addEventListener("ended", function () {
+          musicBtn.textContent = "🎵";
+          musicBtn.classList.remove("playing");
+          musicBtn.classList.add("paused");
+          isPlaying = false;
+        });
+
+        audio.addEventListener("error", function (e) {
+          console.log("Audio error:", e);
+          musicBtn.textContent = "❌";
+          musicBtn.style.cursor = "not-allowed";
+        });
+
+        // Try to autoplay with user interaction
+        document.addEventListener(
+          "click",
+          function autoPlay() {
+            if (!isPlaying) {
+              audio
+                .play()
+                .then(() => {
+                  musicBtn.textContent = "🎶";
+                  musicBtn.classList.add("playing");
+                  isPlaying = true;
+                })
+                .catch(() => {
+                  // Autoplay failed, user needs to click music button
+                });
+            }
+            document.removeEventListener("click", autoPlay);
+          },
+          { once: true }
+        );
+      }
+
+      // Initialize all effects
       document.addEventListener("DOMContentLoaded", function () {
         createBouncingTitle();
         createFloatingPetals();
         createPetalsRain();
         createSparkles();
+        initMusicPlayer(); // Initialize music player
 
         // Test photo visibility first
         setTimeout(() => {
