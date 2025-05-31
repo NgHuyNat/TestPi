@@ -303,6 +303,9 @@
         font-style: italic;
         animation: titleBounce 2s ease-in-out infinite;
         letter-spacing: 1px;
+        line-height: 1.2;
+        max-width: 90vw;
+        word-wrap: break-word;
       }
 
       @keyframes titleBounce {
@@ -601,11 +604,12 @@
           width: 85vw;
           height: 55vh;
         }
-
         .bouncing-title {
           font-size: 1rem;
           top: 5px;
           padding: 0 5px;
+          line-height: 1.1;
+          max-width: 95vw;
         }
 
         .orbit-container {
@@ -640,10 +644,12 @@
           width: 80vw;
           height: 50vh;
         }
-
         .bouncing-title {
           font-size: 0.9rem;
           top: 5px;
+          line-height: 1.1;
+          max-width: 95vw;
+          padding: 0 3px;
         }
 
         .orbit-rose {
@@ -754,10 +760,11 @@
         🎵
       </button>
     </div>
-
-    <h1 class="bouncing-title">
-      Chúc mừng Quốc tế thiếu nhi embee Thanh Tammmmm
-    </h1>
+    <div>
+      <span class="bouncing-title">
+        Chúc mừng Quốc tế thiếu nhi embee Thanh Tammmmm
+      </span>
+    </div>
 
     <!-- Floating Petals Background -->
     <div class="petals-bg" id="petalsBackground"></div>
