@@ -306,6 +306,9 @@
         line-height: 1.2;
         max-width: 90vw;
         word-wrap: break-word;
+        line-height: 1.2;
+        max-width: 90vw;
+        word-wrap: break-word;
       }
 
       @keyframes titleBounce {
@@ -489,181 +492,9 @@
         height: 100%;
         pointer-events: none;
         z-index: 15;
-      } /* Responsive - Tablet */
-      @media (max-width: 1024px) {
-        .bouquet-container {
-          width: 320px;
-          height: 420px;
-        }
-
-        .photo-bouquet {
-          width: 300px;
-          height: 400px;
-        }
-
-        .orbit-container {
-          width: 500px;
-          height: 500px;
-        }
-
-        .bouncing-title {
-          font-size: 1.8rem;
-          top: 15px;
-        }
       }
 
-      /* Responsive - Mobile */
-      @media (max-width: 768px) {
-        body {
-          overflow-x: hidden;
-          padding: 10px;
-        }
-
-        .flying-photo {
-          width: 70px;
-          height: 70px;
-          border-width: 2px;
-        }
-
-        .bouquet-container {
-          width: 90vw;
-          max-width: 280px;
-          height: 60vh;
-          max-height: 360px;
-        }
-
-        .photo-bouquet {
-          width: 90vw;
-          max-width: 280px;
-          height: 60vh;
-          max-height: 360px;
-        }
-
-        .orbit-container {
-          width: 95vw;
-          max-width: 400px;
-          height: 95vw;
-          max-height: 400px;
-        }
-
-        .orbit1 {
-          width: 50%;
-          height: 50%;
-          top: 25%;
-          left: 25%;
-        }
-
-        .orbit2 {
-          width: 75%;
-          height: 75%;
-          top: 12.5%;
-          left: 12.5%;
-        }
-
-        .orbit3 {
-          width: 100%;
-          height: 100%;
-          top: 0;
-          left: 0;
-        }
-        .bouncing-title {
-          font-size: 1.2rem;
-          top: 60px;
-          left: 50%;
-          right: 10px;
-          transform: translateX(-50%);
-          text-align: center;
-          line-height: 1.3;
-          padding: 0 10px;
-          max-width: 90vw;
-          word-wrap: break-word;
-          hyphens: auto;
-        }
-
-        .sparkle-container {
-          width: 90vw;
-          height: 90vw;
-          max-width: 400px;
-          max-height: 400px;
-        }
-      }
-
-      /* Responsive - Small Mobile */
-      @media (max-width: 480px) {
-        .flying-photo {
-          width: 60px;
-          height: 60px;
-        }
-
-        .bouquet-container {
-          width: 85vw;
-          height: 55vh;
-        }
-
-        .photo-bouquet {
-          width: 85vw;
-          height: 55vh;
-        }
-        .bouncing-title {
-          font-size: 1rem;
-          top: 5px;
-          padding: 0 5px;
-          line-height: 1.1;
-          max-width: 95vw;
-        }
-
-        .orbit-container {
-          width: 90vw;
-          height: 90vw;
-        }
-
-        .sparkle-container {
-          width: 85vw;
-          height: 85vw;
-        }
-
-        .orbit-rose {
-          width: 15px;
-          height: 15px;
-        }
-      }
-
-      /* Responsive - Very Small Mobile */
-      @media (max-width: 360px) {
-        .flying-photo {
-          width: 50px;
-          height: 50px;
-        }
-
-        .bouquet-container {
-          width: 80vw;
-          height: 50vh;
-        }
-
-        .photo-bouquet {
-          width: 80vw;
-          height: 50vh;
-        }
-        .bouncing-title {
-          font-size: 0.9rem;
-          top: 5px;
-          line-height: 1.1;
-          max-width: 95vw;
-          padding: 0 3px;
-        }
-
-        .orbit-rose {
-          width: 12px;
-          height: 12px;
-        }
-
-        .sparkle {
-          width: 4px;
-          height: 4px;
-        }
-      }
-
-      /* Audio Player Styles */
+      /* Audio Player Styles */ /* Audio Player Styles */
       .audio-player {
         position: fixed;
         top: 20px;
@@ -710,39 +541,6 @@
             0 0 30px rgba(255, 105, 180, 0.6);
         }
       }
-      @media (max-width: 768px) {
-        .audio-player {
-          top: 10px;
-          right: 10px;
-        }
-
-        .music-btn {
-          width: 50px;
-          height: 50px;
-          font-size: 20px;
-        }
-      }
-
-      @media (max-width: 480px) {
-        .audio-player {
-          top: 5px;
-          right: 5px;
-        }
-
-        .music-btn {
-          width: 45px;
-          height: 45px;
-          font-size: 18px;
-        }
-      }
-
-      @media (max-width: 360px) {
-        .music-btn {
-          width: 40px;
-          height: 40px;
-          font-size: 16px;
-        }
-      }
     </style>
   </head>
   <body>
@@ -759,6 +557,11 @@
       >
         🎵
       </button>
+    </div>
+    <div>
+      <span class="bouncing-title">
+        Chúc mừng Quốc tế thiếu nhi embee Thanh Tammmmm
+      </span>
     </div>
     <div>
       <span class="bouncing-title">
@@ -940,19 +743,8 @@
           "z6658431377031_36e6b4659c206fcac3668ccf8d9d649c.jpg",
           "z6658431387148_f965b553a1cffc4724ab78e3e9949a68.jpg",
           "z6658431392102_f2e2cc47fdb864dec8121b67f2ca7b35.jpg",
-        ];
-
-        // Detect mobile device for performance optimization
-        const isMobile = window.innerWidth <= 768;
-        const interval = isMobile ? 4000 : 2000; // Slower on mobile
-        const maxPhotos = isMobile ? 3 : 6; // Fewer photos on mobile
-
+        ]; // Create flying photos with fixed settings
         setInterval(() => {
-          // Limit concurrent photos on mobile
-          if (isMobile && container.children.length >= maxPhotos) {
-            return;
-          }
-
           console.log("Creating new flying photo...");
           const photo = document.createElement("img");
           photo.className = "flying-photo";
