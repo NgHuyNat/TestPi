@@ -734,6 +734,27 @@
           }, 13000);
         }, 1000);
       }
+      function createBouncingTitle() {
+        const title = document.querySelector(".bouncing-title");
+        const html = title.innerHTML;
+        title.innerHTML = "";
+
+        let index = 0;
+        // Duyệt từng ký tự, nhưng giữ nguyên thẻ <br>
+        html.split(/(<br\s*\/?>)/gi).forEach((part) => {
+          if (part.match(/<br\s*\/?>/i)) {
+            title.appendChild(document.createElement("br"));
+          } else {
+            part.split("").forEach((char) => {
+              const span = document.createElement("span");
+              span.textContent = char === " " ? "\u00A0" : char;
+              span.style.animationDelay = index * 0.1 + "s";
+              title.appendChild(span);
+              index++;
+            });
+          }
+        });
+      }
 
       // Create rose petals rain from top
       function createPetalsRain() {
@@ -1022,18 +1043,7 @@
           rose.remove();
         }, 2000);
       }); // Create bouncing letter effect
-      function createBouncingTitle() {
-        const title = document.querySelector(".bouncing-title");
-        const text = title.textContent;
-        title.innerHTML = "";
 
-        text.split("").forEach((char, index) => {
-          const span = document.createElement("span");
-          span.textContent = char === " " ? "\u00A0" : char; // Non-breaking space for spaces
-          span.style.animationDelay = index * 0.1 + "s";
-          title.appendChild(span);
-        });
-      } // Music control functionality
       function initMusicPlayer() {
         const audio = document.getElementById("backgroundMusic");
         const musicBtn = document.getElementById("musicToggle");
