@@ -11,6 +11,8 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
+// Serve images from root directory
+app.use(express.static(__dirname));
 
 // Routes
 app.get("/", (req, res) => {

@@ -3,227 +3,946 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TestHostPi Server - nhtan.io.vn</title>
+    <title>🌹 Rose Bouquet</title>
     <style>
-      body {
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        line-height: 1.6;
+      * {
         margin: 0;
         padding: 0;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
         min-height: 100vh;
+        background: linear-gradient(
+          45deg,
+          #ffb3d1,
+          #ff8fab,
+          #ff69b4,
+          #e91e63,
+          #ff1744,
+          #ffc0cb
+        );
+        background-size: 400% 400%;
+        animation: gradientShift 8s ease infinite;
+        overflow: hidden;
         display: flex;
         align-items: center;
         justify-content: center;
+        position: relative;
       }
-      .container {
-        background: white;
-        padding: 2rem;
-        border-radius: 10px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        text-align: center;
-        max-width: 600px;
-        width: 90%;
+
+      @keyframes gradientShift {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      } /* Floating Petals Background */
+      .petals-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 1;
       }
-      h1 {
-        color: #333;
-        margin-bottom: 1rem;
+      .petal-float {
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        animation: floatUp 10s linear infinite;
       }
-      .status {
-        background: #28a745;
-        color: white;
-        padding: 0.5rem 1rem;
+
+      .petal-float::before {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(45deg, #ffb3d1, #ff8fab, #ff69b4);
+        border-radius: 50% 0 50% 0;
+        transform: rotate(45deg);
+      }
+
+      .petal-drop {
+        position: absolute;
+        width: 12px;
+        height: 12px;
+        animation: petalRain 6s linear infinite;
+      }
+
+      .petal-drop::before {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(45deg, #ff8fab, #ffb3d1, #ffc0cb);
+        border-radius: 50% 0 50% 0;
+        transform: rotate(25deg);
+      }
+      @keyframes floatUp {
+        0% {
+          transform: translateY(100vh) rotate(0deg) scale(0);
+          opacity: 0;
+        }
+        10% {
+          opacity: 1;
+          transform: translateY(90vh) rotate(36deg) scale(1);
+        }
+        90% {
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(-100px) rotate(360deg) scale(0);
+          opacity: 0;
+        }
+      } /* Rose Petals Rain Effect */
+      .petals-rain {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 2;
+      }
+
+      @keyframes petalRain {
+        0% {
+          transform: translateY(-100px) rotate(0deg);
+          opacity: 0;
+        }
+        10% {
+          opacity: 1;
+        }
+        90% {
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(100vh) rotate(360deg);
+          opacity: 0;
+        }
+      } /* Orbiting Roses */
+      .orbit-container {
+        position: absolute;
+        width: 600px;
+        height: 600px;
+        z-index: 3;
+      }
+
+      .orbit {
+        position: absolute;
+        border-radius: 50%;
+        animation: rotate 12s linear infinite;
+      }
+
+      .orbit1 {
+        width: 300px;
+        height: 300px;
+        top: 150px;
+        left: 150px;
+      }
+
+      .orbit2 {
+        width: 450px;
+        height: 450px;
+        top: 75px;
+        left: 75px;
+        animation-duration: 18s;
+        animation-direction: reverse;
+      }
+
+      .orbit3 {
+        width: 600px;
+        height: 600px;
+        top: 0;
+        left: 0;
+        animation-duration: 24s;
+      }
+
+      @keyframes rotate {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      .orbit-rose {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        animation: counter-rotate 12s linear infinite;
+        filter: drop-shadow(0 0 8px rgba(255, 105, 180, 0.6));
+      }
+
+      .orbit-rose::before {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(45deg, #ff69b4, #ff1744, #e91e63);
+        border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+        transform: rotate(45deg);
+      }
+
+      .orbit-rose::after {
+        content: "";
+        position: absolute;
+        width: 60%;
+        height: 60%;
+        top: 20%;
+        left: 20%;
+        background: linear-gradient(45deg, #ff8fab, #ffb3d1);
+        border-radius: 50%;
+      }
+
+      .orbit2 .orbit-rose {
+        animation-duration: 18s;
+        animation-direction: reverse;
+      }
+
+      .orbit3 .orbit-rose {
+        animation-duration: 24s;
+      }
+
+      @keyframes counter-rotate {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(-360deg);
+        }
+      } /* Photo Bouquet Container */
+      .bouquet-container {
+        position: relative;
+        width: 400px;
+        height: 500px;
+        z-index: 10;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* Photo Bouquet Image */
+      .photo-bouquet {
+        position: relative;
+        width: 350px;
+        height: 450px;
         border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3),
+          0 0 30px rgba(255, 105, 180, 0.5);
+        animation: gentleFloat 6s ease-in-out infinite;
+        z-index: 5;
+      }
+
+      .photo-bouquet img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+      }
+
+      @keyframes gentleFloat {
+        0%,
+        100% {
+          transform: translateY(0px) rotate(-1deg);
+        }
+        50% {
+          transform: translateY(-10px) rotate(1deg);
+        }
+      }
+
+      /* Glowing border effect */
+      .photo-bouquet::before {
+        content: "";
+        position: absolute;
+        top: -3px;
+        left: -3px;
+        right: -3px;
+        bottom: -3px;
+        background: linear-gradient(45deg, #ff69b4, #ff1744, #e91e63, #ff6b9d);
+        border-radius: 23px;
+        z-index: -1;
+        animation: borderGlow 3s ease-in-out infinite;
+      }
+      @keyframes borderGlow {
+        0%,
+        100% {
+          opacity: 0.7;
+          filter: blur(3px);
+        }
+        50% {
+          opacity: 1;
+          filter: blur(5px);
+        }
+      } /* Bouncing Title Animation */
+      .bouncing-title {
+        position: absolute;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        color: white;
+        z-index: 10;
+        text-align: center;
+        text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7),
+          0 0 20px rgba(255, 105, 180, 0.8), 0 0 30px rgba(255, 20, 147, 0.6);
+        font-family: "Times New Roman", serif;
+        font-size: 2rem;
+        font-weight: bold;
+        font-style: italic;
+        animation: titleBounce 2s ease-in-out infinite;
+        letter-spacing: 1px;
+      }
+
+      @keyframes titleBounce {
+        0%,
+        20%,
+        50%,
+        80%,
+        100% {
+          transform: translateX(-50%) translateY(0);
+        }
+        40% {
+          transform: translateX(-50%) translateY(-15px);
+        }
+        60% {
+          transform: translateX(-50%) translateY(-8px);
+        }
+      }
+
+      /* Letter bouncing effect */
+      .bouncing-title span {
         display: inline-block;
-        margin: 1rem 0;
-      }
-      .api-links {
-        margin: 2rem 0;
-      }
-      .api-links a {
+        animation: letterBounce 2.5s ease-in-out infinite;
+      } /* Letter bouncing effect */
+      .bouncing-title span {
         display: inline-block;
-        background: #007bff;
-        color: white;
-        padding: 0.5rem 1rem;
-        text-decoration: none;
-        border-radius: 5px;
-        margin: 0.5rem;
-        transition: background 0.3s;
+        animation: letterBounce 3s ease-in-out infinite;
+        transform-origin: bottom;
       }
-      .api-links a:hover {
-        background: #0056b3;
+      @keyframes letterBounce {
+        0%,
+        20%,
+        50%,
+        80%,
+        100% {
+          transform: translateY(0) scale(1) rotate(0deg);
+        }
+        40% {
+          transform: translateY(-30px) scale(1.3) rotate(-5deg);
+        }
+        60% {
+          transform: translateY(-15px) scale(1.1) rotate(2deg);
+        }
+      } /* Sparkles around bouquet */
+      .sparkle-container {
+        position: absolute;
+        width: 500px;
+        height: 500px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 4;
       }
-      .info {
-        background: #f8f9fa;
-        padding: 1rem;
-        border-radius: 5px;
-        margin: 1rem 0;
-        border-left: 4px solid #007bff;
+
+      .sparkle {
+        position: absolute;
+        width: 6px;
+        height: 6px;
+        background: radial-gradient(circle, #fff, #ff69b4);
+        border-radius: 50%;
+        animation: sparkle 2.5s ease-in-out infinite;
+        box-shadow: 0 0 12px #ff69b4;
       }
-      .domain-info {
-        background: linear-gradient(135deg, #ff6b6b, #ee5a24);
-        color: white;
-        border-left: 4px solid #fff;
+
+      @keyframes sparkle {
+        0%,
+        100% {
+          transform: scale(0) rotate(0deg);
+          opacity: 0;
+        }
+        50% {
+          transform: scale(1.5) rotate(180deg);
+          opacity: 1;
+        }
+      } /* Click roses effect */
+      .click-rose {
+        position: fixed;
+        pointer-events: none;
+        z-index: 1000;
+        width: 24px;
+        height: 24px;
+        animation: clickRoseAnim 2s ease-out forwards;
       }
-      .domain-info h3 {
-        color: white;
-        margin-top: 0;
+
+      .click-rose::before {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(45deg, #ff1744, #ff4569, #e91e63);
+        border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+        transform: rotate(45deg);
       }
-      .tunnel-status {
-        background: linear-gradient(135deg, #f39c12, #e67e22);
-        color: white;
-        border-left: 4px solid #fff;
+
+      .click-rose::after {
+        content: "";
+        position: absolute;
+        width: 70%;
+        height: 70%;
+        top: 15%;
+        left: 15%;
+        background: linear-gradient(45deg, #ff4569, #ff6b9d);
+        border-radius: 50%;
       }
-      .tunnel-status h3 {
-        color: white;
-        margin-top: 0;
+
+      @keyframes clickRoseAnim {
+        0% {
+          transform: scale(0) rotate(0deg);
+          opacity: 1;
+        }
+        50% {
+          transform: scale(1.3) rotate(180deg);
+          opacity: 1;
+        }
+        100% {
+          transform: scale(0) rotate(360deg) translateY(-120px);
+          opacity: 0;
+        }
+      } /* Flying Photos Effect */
+      .flying-photo {
+        position: absolute;
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        border: 3px solid #ff69b4;
+        box-shadow: 0 0 15px rgba(255, 105, 180, 0.6),
+          0 0 25px rgba(255, 105, 180, 0.4);
+        object-fit: cover;
+        z-index: 20;
+        pointer-events: none;
+        display: block;
+        visibility: visible;
+        /* Ensure photos are visible */
+      }
+
+      @keyframes photoFadeInOut {
+        0% {
+          opacity: 0;
+          transform: translate(-50%, -50%) scale(0);
+        }
+        10% {
+          opacity: 1;
+          transform: translate(-50%, -50%) scale(1);
+        }
+        90% {
+          opacity: 1;
+          transform: translate(-50%, -50%) scale(1);
+        }
+        100% {
+          opacity: 0;
+          transform: translate(-50%, -50%) scale(0);
+        }
+      }
+
+      .flying-photo:nth-child(even) {
+        animation-direction: reverse;
+        border-color: #ff1744;
+        box-shadow: 0 0 15px rgba(255, 23, 68, 0.6),
+          0 0 25px rgba(255, 23, 68, 0.4);
+      }
+
+      .flying-photo:nth-child(3n) {
+        animation-duration: 15s;
+        border-color: #e91e63;
+        box-shadow: 0 0 15px rgba(233, 30, 99, 0.6),
+          0 0 25px rgba(233, 30, 99, 0.4);
+      }
+
+      .flying-photo:nth-child(4n) {
+        animation-duration: 10s;
+        border-color: #ff6b9d;
+        box-shadow: 0 0 15px rgba(255, 107, 157, 0.6),
+          0 0 25px rgba(255, 107, 157, 0.4);
+      }
+
+      /* Container for flying photos */
+      .flying-photos-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 15;
+      } /* Responsive */
+      @media (max-width: 768px) {
+        .flying-photo {
+          width: 90px;
+          height: 90px;
+        }
+
+        .bouquet-container {
+          width: 280px;
+          height: 360px;
+        }
+
+        .photo-bouquet {
+          width: 280px;
+          height: 360px;
+        }
+
+        .orbit-container {
+          width: 400px;
+          height: 400px;
+        }
+
+        .orbit1 {
+          width: 200px;
+          height: 200px;
+          top: 100px;
+          left: 100px;
+        }
+
+        .orbit2 {
+          width: 300px;
+          height: 300px;
+          top: 50px;
+          left: 50px;
+        }
+
+        .orbit3 {
+          width: 400px;
+          height: 400px;
+          top: 0;
+          left: 0;
+        }
       }
     </style>
   </head>
   <body>
-    <div class="container">
-      <h1>🚀 TestHostPi Server</h1>
-      <div class="status" id="server-status">✅ Server đang hoạt động</div>
+    <h1 class="bouncing-title">
+      Chúc mừng Quốc tế thiếu nhi embee Thanh Tammmmm
+    </h1>
 
-      <div class="info domain-info">
-        <h3>🌐 Domain Information</h3>
-        <p><strong>Target Domain:</strong> nhtan.io.vn</p>
-        <p><strong>Current URL:</strong> <span id="current-url"></span></p>
-        <p><strong>SSL Status:</strong> <span id="ssl-status"></span></p>
-        <p><strong>Provider:</strong> Vinahost → Cloudflare</p>
+    <!-- Floating Petals Background -->
+    <div class="petals-bg" id="petalsBackground"></div>
+
+    <!-- Rose Petals Rain Effect -->
+    <div class="petals-rain" id="petalsRain"></div>
+    <!-- Orbiting Roses -->
+    <div class="orbit-container">
+      <div class="orbit orbit1">
+        <div class="orbit-rose" style="top: 0; left: 50%"></div>
+        <div class="orbit-rose" style="top: 50%; left: 100%"></div>
+        <div class="orbit-rose" style="top: 100%; left: 50%"></div>
+        <div class="orbit-rose" style="top: 50%; left: 0"></div>
       </div>
-
-      <div class="info tunnel-status">
-        <h3>☁️ Cloudflare Tunnel Status</h3>
-        <p>
-          <strong>Setup Status:</strong>
-          <span id="tunnel-setup-status">🔄 In Progress</span>
-        </p>
-        <p>
-          <strong>Nameservers:</strong> holly.ns.cloudflare.com,
-          archer.ns.cloudflare.com
-        </p>
-        <p><strong>Next Step:</strong> Complete Cloudflare authorization</p>
+      <div class="orbit orbit2">
+        <div class="orbit-rose" style="top: 0; left: 50%"></div>
+        <div class="orbit-rose" style="top: 25%; left: 85%"></div>
+        <div class="orbit-rose" style="top: 75%; left: 85%"></div>
+        <div class="orbit-rose" style="top: 100%; left: 50%"></div>
+        <div class="orbit-rose" style="top: 75%; left: 15%"></div>
+        <div class="orbit-rose" style="top: 25%; left: 15%"></div>
       </div>
-
-      <div class="info">
-        <h3>🌐 API Endpoints</h3>
-        <div class="api-links">
-          <a href="/api/health">Health Check</a>
-          <a href="/api/users">Danh sách Users</a>
-        </div>
-      </div>
-
-      <div class="info">
-        <h3>📋 Thông tin Server</h3>
-        <p><strong>Version:</strong> 1.0.0</p>
-        <p><strong>Framework:</strong> Express.js</p>
-        <p><strong>Port:</strong> <span id="port">3000</span></p>
-        <p><strong>Thời gian VN:</strong> <span id="time"></span></p>
-        <p><strong>Uptime:</strong> <span id="uptime">Đang tải...</span></p>
-        <p><strong>Host:</strong> Raspberry Pi</p>
-      </div>
-
-      <div class="info">
-        <h3>🛠️ Setup Progress</h3>
-        <p>✅ Node.js server running</p>
-        <p>✅ Domain registered (nhtan.io.vn)</p>
-        <p>✅ Cloudflare nameservers configured</p>
-        <p>🔄 Cloudflare tunnel authorization pending</p>
-        <p>⏳ DNS propagation waiting (0-24h)</p>
+      <div class="orbit orbit3">
+        <div class="orbit-rose" style="top: 0; left: 50%"></div>
+        <div class="orbit-rose" style="top: 20%; left: 80%"></div>
+        <div class="orbit-rose" style="top: 50%; left: 95%"></div>
+        <div class="orbit-rose" style="top: 80%; left: 80%"></div>
+        <div class="orbit-rose" style="top: 100%; left: 50%"></div>
+        <div class="orbit-rose" style="top: 80%; left: 20%"></div>
+        <div class="orbit-rose" style="top: 50%; left: 5%"></div>
+        <div class="orbit-rose" style="top: 20%; left: 20%"></div>
       </div>
     </div>
+    <!-- Sparkles -->
+    <div class="sparkle-container" id="sparkleContainer"></div>
 
+    <!-- Flying Photos Container -->
+    <div class="flying-photos-container" id="flyingPhotosContainer"></div>
+
+    <!-- Photo Bouquet -->
+    <div class="bouquet-container">
+      <div class="photo-bouquet">
+        <img src="bouquet.jpg" alt="Rose Bouquet" />
+      </div>
+    </div>
     <script>
-      // Update current time with Vietnam timezone
-      function updateTime() {
-        const now = new Date();
-        const vietnamTime = now.toLocaleString("vi-VN", {
-          timeZone: "Asia/Ho_Chi_Minh",
-          year: "numeric",
-          month: "2-digit",
-          day: "2-digit",
-          hour: "2-digit",
-          minute: "2-digit",
-          second: "2-digit",
-        });
-        document.getElementById("time").textContent = vietnamTime;
-      }
-      updateTime();
-      setInterval(updateTime, 1000);
+      // Create floating petals from bottom
+      function createFloatingPetals() {
+        const petalsContainer = document.getElementById("petalsBackground");
 
-      // Update domain and connection info
-      function updateDomainInfo() {
-        const hostname = window.location.hostname;
-        const protocol = window.location.protocol;
-        const port = window.location.port;
+        setInterval(() => {
+          const petal = document.createElement("div");
+          petal.className = "petal-float";
+          petal.style.left = Math.random() * 100 + "%";
+          petal.style.animationDuration = Math.random() * 5 + 8 + "s";
+          petal.style.animationDelay = Math.random() * 3 + "s";
 
-        // Update current URL
-        document.getElementById(
-          "current-url"
-        ).innerHTML = `<a href="${window.location.href}" target="_blank" style="color: white; text-decoration: underline;">${window.location.href}</a>`;
+          // Random color variations
+          const colors = [
+            "linear-gradient(45deg, #ffb3d1, #ff8fab, #ff69b4)",
+            "linear-gradient(45deg, #ff8fab, #ffb3d1, #ffc0cb)",
+            "linear-gradient(45deg, #ff69b4, #ff1744, #e91e63)",
+            "linear-gradient(45deg, #ffc0cb, #ffb3d1, #ff8fab)",
+          ];
+          const randomColor = colors[Math.floor(Math.random() * colors.length)];
+          petal.style.setProperty("--petal-color", randomColor);
 
-        // SSL status
-        const sslStatus =
-          protocol === "https:" ? "✅ HTTPS Enabled" : "⚠️ HTTP Only";
-        document.getElementById("ssl-status").textContent = sslStatus;
+          petalsContainer.appendChild(petal);
 
-        // Tunnel setup status based on hostname
-        let tunnelStatus = "";
-        if (
-          hostname === "nhtan.io.vn" ||
-          hostname === "www.nhtan.io.vn" ||
-          hostname === "api.nhtan.io.vn"
-        ) {
-          tunnelStatus = "✅ Complete - Domain Active";
-        } else if (hostname.includes("trycloudflare.com")) {
-          tunnelStatus = "🔄 Temporary Tunnel Active";
-        } else if (hostname.includes("192.168") || hostname === "localhost") {
-          tunnelStatus = "🏠 Local Access - Tunnel Setup Needed";
-        } else {
-          tunnelStatus = "⚠️ Unknown Status";
-        }
-        document.getElementById("tunnel-setup-status").textContent =
-          tunnelStatus;
-
-        // Update port
-        document.getElementById("port").textContent =
-          port || (protocol === "https:" ? "443" : "80");
+          setTimeout(() => {
+            petal.remove();
+          }, 13000);
+        }, 1000);
       }
 
-      // Check server health and update uptime
-      function checkServerHealth() {
-        fetch("/api/health")
-          .then((response) => response.json())
-          .then((data) => {
-            // Update status
-            document.getElementById("server-status").textContent =
-              "✅ Server đang hoạt động";
+      // Create rose petals rain from top
+      function createPetalsRain() {
+        const rainContainer = document.getElementById("petalsRain");
 
-            // Update uptime
-            const uptimeSeconds = Math.floor(data.uptime);
-            const hours = Math.floor(uptimeSeconds / 3600);
-            const minutes = Math.floor((uptimeSeconds % 3600) / 60);
-            const seconds = uptimeSeconds % 60;
-            document.getElementById(
-              "uptime"
-            ).textContent = `${hours}h ${minutes}m ${seconds}s`;
-          })
-          .catch((error) => {
-            document.getElementById("server-status").textContent =
-              "⚠️ Kết nối API thất bại";
-            document.getElementById("uptime").textContent = "N/A";
+        setInterval(() => {
+          const petal = document.createElement("div");
+          petal.className = "petal-drop";
+          petal.style.left = Math.random() * 100 + "%";
+          petal.style.animationDuration = Math.random() * 3 + 5 + "s";
+          petal.style.animationDelay = Math.random() * 4 + "s";
+
+          // Random color variations
+          const colors = [
+            "linear-gradient(45deg, #ff8fab, #ffb3d1, #ffc0cb)",
+            "linear-gradient(45deg, #ffb3d1, #ff8fab, #ff69b4)",
+            "linear-gradient(45deg, #ffc0cb, #ffb3d1, #ff8fab)",
+            "linear-gradient(45deg, #ff69b4, #ff8fab, #ffb3d1)",
+          ];
+          const randomColor = colors[Math.floor(Math.random() * colors.length)];
+          petal.style.setProperty("--petal-color", randomColor);
+
+          rainContainer.appendChild(petal);
+
+          setTimeout(() => {
+            petal.remove();
+          }, 10000);
+        }, 800);
+      }
+
+      // Create sparkles around bouquet
+      function createSparkles() {
+        const container = document.getElementById("sparkleContainer");
+
+        setInterval(() => {
+          const sparkle = document.createElement("div");
+          sparkle.className = "sparkle";
+
+          // Random position around the bouquet
+          const angle = Math.random() * Math.PI * 2;
+          const radius = Math.random() * 160 + 120;
+          const x = Math.cos(angle) * radius + 250;
+          const y = Math.sin(angle) * radius + 250;
+
+          sparkle.style.left = x + "px";
+          sparkle.style.top = y + "px";
+          sparkle.style.animationDelay = Math.random() * 2.5 + "s";
+          sparkle.style.animationDuration = Math.random() * 1.5 + 2 + "s";
+
+          container.appendChild(sparkle);
+
+          setTimeout(() => {
+            sparkle.remove();
+          }, 3000);
+        }, 200);
+      } // Simple test function to verify photo visibility
+      function testPhotoVisibility() {
+        console.log("Testing photo visibility...");
+        const container = document.getElementById("flyingPhotosContainer");
+        const testPhoto = document.createElement("img");
+        testPhoto.className = "flying-photo";
+        testPhoto.src = "z6658431356699_9cd98bb95cd1b8df70559d3cb1c95a7c.jpg";
+        testPhoto.style.position = "absolute";
+        testPhoto.style.left = "50%";
+        testPhoto.style.top = "50%";
+        testPhoto.style.transform = "translate(-50%, -50%)";
+        testPhoto.style.zIndex = "100";
+        testPhoto.style.opacity = "1";
+
+        testPhoto.onload = function () {
+          console.log("Test photo loaded and should be visible!");
+        };
+
+        testPhoto.onerror = function () {
+          console.error("Test photo failed to load");
+        };
+
+        container.appendChild(testPhoto);
+
+        // Remove after 5 seconds
+        setTimeout(() => {
+          if (testPhoto.parentNode) {
+            testPhoto.remove();
+            console.log("Test photo removed");
+          }
+        }, 5000);
+      }
+
+      // Create flying photos around bouquet
+      function createFlyingPhotos() {
+        console.log("createFlyingPhotos called");
+        const container = document.getElementById("flyingPhotosContainer");
+        console.log("Container found:", container);
+
+        const photos = [
+          "z6658431356699_9cd98bb95cd1b8df70559d3cb1c95a7c.jpg",
+          "z6658431357537_d4593b2de846fd35015c973566f9dde0.jpg",
+          "z6658431361426_c9f3c85def4ca7aa8943d6d33a4c29ee.jpg",
+          "z6658431370980_c9b8e80e9d8a646a28b438552bbf55fc.jpg",
+          "z6658431373211_8f7c0eea53342c0163b98e3a364c5b52.jpg",
+          "z6658431377031_36e6b4659c206fcac3668ccf8d9d649c.jpg",
+          "z6658431387148_f965b553a1cffc4724ab78e3e9949a68.jpg",
+          "z6658431392102_f2e2cc47fdb864dec8121b67f2ca7b35.jpg",
+        ];
+
+        setInterval(() => {
+          console.log("Creating new flying photo...");
+          const photo = document.createElement("img");
+          photo.className = "flying-photo";
+
+          // Random photo selection
+          const randomPhoto = photos[Math.floor(Math.random() * photos.length)];
+          photo.src = randomPhoto;
+          console.log("Selected photo:", randomPhoto);
+
+          // Add error handling for image loading
+          photo.onerror = function () {
+            console.error("Failed to load image:", randomPhoto);
+          };
+
+          photo.onload = function () {
+            console.log("Image loaded successfully:", randomPhoto);
+          };
+
+          // Random starting position from edges of screen
+          const startSide = Math.floor(Math.random() * 4); // 0: top, 1: right, 2: bottom, 3: left
+          let startX, startY, endX, endY;
+
+          switch (startSide) {
+            case 0: // from top
+              startX = Math.random() * window.innerWidth;
+              startY = -150;
+              break;
+            case 1: // from right
+              startX = window.innerWidth + 150;
+              startY = Math.random() * window.innerHeight;
+              break;
+            case 2: // from bottom
+              startX = Math.random() * window.innerWidth;
+              startY = window.innerHeight + 150;
+              break;
+            case 3: // from left
+              startX = -150;
+              startY = Math.random() * window.innerHeight;
+              break;
+          }
+
+          // Random ending position - opposite side or different edge
+          const endSide = (startSide + 2) % 4; // opposite side
+          switch (endSide) {
+            case 0: // to top
+              endX = Math.random() * window.innerWidth;
+              endY = -150;
+              break;
+            case 1: // to right
+              endX = window.innerWidth + 150;
+              endY = Math.random() * window.innerHeight;
+              break;
+            case 2: // to bottom
+              endX = Math.random() * window.innerWidth;
+              endY = window.innerHeight + 150;
+              break;
+            case 3: // to left
+              endX = -150;
+              endY = Math.random() * window.innerHeight;
+              break;
+          }
+
+          // Random rotation and scale
+          const rotation = Math.random() * 360 - 180; // -180 to 180 degrees
+          const scale = Math.random() * 0.3 + 0.8; // 0.8 to 1.1
+
+          // Override positioning - use absolute since container is fixed
+          photo.style.position = "absolute";
+          photo.style.left = startX + "px";
+          photo.style.top = startY + "px";
+          photo.style.transform = "translate(-50%, -50%)";
+          photo.style.zIndex = Math.floor(Math.random() * 10) + 20;
+          photo.style.opacity = "0";
+
+          // Random animation duration
+          const duration = Math.random() * 8 + 6; // 6-14 seconds
+
+          // Create smooth curved motion keyframes with control points
+          const animationName = `smoothFly${Date.now()}${Math.random()
+            .toString()
+            .replace(".", "")}`;
+
+          // Calculate curved path using bezier-like points
+          const midX1 =
+            startX + (endX - startX) * 0.3 + (Math.random() - 0.5) * 400;
+          const midY1 =
+            startY + (endY - startY) * 0.3 + (Math.random() - 0.5) * 400;
+          const midX2 =
+            startX + (endX - startX) * 0.7 + (Math.random() - 0.5) * 400;
+          const midY2 =
+            startY + (endY - startY) * 0.7 + (Math.random() - 0.5) * 400;
+
+          const keyframes = `
+            @keyframes ${animationName} {
+              0% {
+                left: ${startX}px;
+                top: ${startY}px;
+                transform: translate(-50%, -50%) rotate(0deg) scale(${scale});
+                opacity: 0;
+              }
+              5% {
+                opacity: 1;
+              }
+              20% {
+                left: ${midX1}px;
+                top: ${midY1}px;
+                transform: translate(-50%, -50%) rotate(${
+                  rotation * 0.3
+                }deg) scale(${scale * 1.1});
+              }
+              40% {
+                left: ${startX + (endX - startX) * 0.5}px;
+                top: ${startY + (endY - startY) * 0.5}px;
+                transform: translate(-50%, -50%) rotate(${
+                  rotation * 0.6
+                }deg) scale(${scale * 0.95});
+              }
+              60% {
+                left: ${midX2}px;
+                top: ${midY2}px;
+                transform: translate(-50%, -50%) rotate(${
+                  rotation * 0.8
+                }deg) scale(${scale * 1.05});
+              }
+              80% {
+                left: ${startX + (endX - startX) * 0.9}px;
+                top: ${startY + (endY - startY) * 0.9}px;
+                transform: translate(-50%, -50%) rotate(${rotation}deg) scale(${scale});
+              }
+              95% {
+                opacity: 1;
+              }
+              100% {
+                left: ${endX}px;
+                top: ${endY}px;
+                transform: translate(-50%, -50%) rotate(${rotation}deg) scale(${
+            scale * 0.8
           });
+                opacity: 0;
+              }
+            }
+          `;
+
+          // Add keyframes to document
+          const styleSheet = document.createElement("style");
+          styleSheet.textContent = keyframes;
+          document.head.appendChild(styleSheet);
+
+          // Apply animation with smooth easing
+          photo.style.animation = `${animationName} ${duration}s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards`;
+
+          console.log("Adding photo to container...");
+          console.log("Photo start position:", startX, startY);
+          console.log("Photo end position:", endX, endY);
+          console.log("Animation name:", animationName);
+
+          container.appendChild(photo);
+          console.log(
+            "Photo added! Container children count:",
+            container.children.length
+          );
+
+          setTimeout(() => {
+            if (photo.parentNode) {
+              photo.remove();
+            }
+            if (styleSheet.parentNode) {
+              styleSheet.remove();
+            }
+          }, duration * 1000);
+        }, 2000);
       }
 
-      // Initialize on page load
-      document.addEventListener("DOMContentLoaded", function () {
-        updateDomainInfo();
-        checkServerHealth();
+      // Click effect with roses
+      document.addEventListener("click", function (e) {
+        const rose = document.createElement("div");
+        rose.className = "click-rose";
+        rose.style.left = e.clientX + "px";
+        rose.style.top = e.clientY + "px";
+        document.body.appendChild(rose);
 
-        // Auto refresh every 30 seconds
-        setInterval(checkServerHealth, 30000);
+        setTimeout(() => {
+          rose.remove();
+        }, 2000);
+      }); // Create bouncing letter effect
+      function createBouncingTitle() {
+        const title = document.querySelector(".bouncing-title");
+        const text = title.textContent;
+        title.innerHTML = "";
+
+        text.split("").forEach((char, index) => {
+          const span = document.createElement("span");
+          span.textContent = char === " " ? "\u00A0" : char; // Non-breaking space for spaces
+          span.style.animationDelay = index * 0.1 + "s";
+          title.appendChild(span);
+        });
+      } // Initialize all effects
+      document.addEventListener("DOMContentLoaded", function () {
+        createBouncingTitle();
+        createFloatingPetals();
+        createPetalsRain();
+        createSparkles();
+
+        // Test photo visibility first
+        setTimeout(() => {
+          testPhotoVisibility();
+        }, 1000);
+
+        // Start flying photos after test
+        setTimeout(() => {
+          createFlyingPhotos();
+        }, 6000);
       });
+
+      // Add random floating petals periodically
+      setInterval(() => {
+        const container = document.getElementById("petalsBackground");
+
+        for (let i = 0; i < 2; i++) {
+          setTimeout(() => {
+            const petal = document.createElement("div");
+            petal.className = "petal-float";
+            petal.style.left = Math.random() * 100 + "%";
+            petal.style.animationDuration = "8s";
+            container.appendChild(petal);
+
+            setTimeout(() => {
+              petal.remove();
+            }, 8000);
+          }, i * 300);
+        }
+      }, 6000);
     </script>
   </body>
 </html>
