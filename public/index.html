@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TestHostPi Server - nhtan.io.vn</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .container {
+        background: white;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        text-align: center;
+        max-width: 600px;
+        width: 90%;
+      }
+      h1 {
+        color: #333;
+        margin-bottom: 1rem;
+      }
+      .status {
+        background: #28a745;
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        display: inline-block;
+        margin: 1rem 0;
+      }
+      .api-links {
+        margin: 2rem 0;
+      }
+      .api-links a {
+        display: inline-block;
+        background: #007bff;
+        color: white;
+        padding: 0.5rem 1rem;
+        text-decoration: none;
+        border-radius: 5px;
+        margin: 0.5rem;
+        transition: background 0.3s;
+      }
+      .api-links a:hover {
+        background: #0056b3;
+      }
+      .info {
+        background: #f8f9fa;
+        padding: 1rem;
+        border-radius: 5px;
+        margin: 1rem 0;
+        border-left: 4px solid #007bff;
+      }
+      .domain-info {
+        background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+        color: white;
+        border-left: 4px solid #fff;
+      }
+      .domain-info h3 {
+        color: white;
+        margin-top: 0;
+      }
+      .tunnel-status {
+        background: linear-gradient(135deg, #f39c12, #e67e22);
+        color: white;
+        border-left: 4px solid #fff;
+      }
+      .tunnel-status h3 {
+        color: white;
+        margin-top: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>🚀 TestHostPi Server</h1>
+      <div class="status" id="server-status">✅ Server đang hoạt động</div>
+
+      <div class="info domain-info">
+        <h3>🌐 Domain Information</h3>
+        <p><strong>Target Domain:</strong> nhtan.io.vn</p>
+        <p><strong>Current URL:</strong> <span id="current-url"></span></p>
+        <p><strong>SSL Status:</strong> <span id="ssl-status"></span></p>
+        <p><strong>Provider:</strong> Vinahost → Cloudflare</p>
+      </div>
+
+      <div class="info tunnel-status">
+        <h3>☁️ Cloudflare Tunnel Status</h3>
+        <p>
+          <strong>Setup Status:</strong>
+          <span id="tunnel-setup-status">🔄 In Progress</span>
+        </p>
+        <p>
+          <strong>Nameservers:</strong> holly.ns.cloudflare.com,
+          archer.ns.cloudflare.com
+        </p>
+        <p><strong>Next Step:</strong> Complete Cloudflare authorization</p>
+      </div>
+
+      <div class="info">
+        <h3>🌐 API Endpoints</h3>
+        <div class="api-links">
+          <a href="/api/health">Health Check</a>
+          <a href="/api/users">Danh sách Users</a>
+        </div>
+      </div>
+
+      <div class="info">
+        <h3>📋 Thông tin Server</h3>
+        <p><strong>Version:</strong> 1.0.0</p>
+        <p><strong>Framework:</strong> Express.js</p>
+        <p><strong>Port:</strong> <span id="port">3000</span></p>
+        <p><strong>Thời gian VN:</strong> <span id="time"></span></p>
+        <p><strong>Uptime:</strong> <span id="uptime">Đang tải...</span></p>
+        <p><strong>Host:</strong> Raspberry Pi</p>
+      </div>
+
+      <div class="info">
+        <h3>🛠️ Setup Progress</h3>
+        <p>✅ Node.js server running</p>
+        <p>✅ Domain registered (nhtan.io.vn)</p>
+        <p>✅ Cloudflare nameservers configured</p>
+        <p>🔄 Cloudflare tunnel authorization pending</p>
+        <p>⏳ DNS propagation waiting (0-24h)</p>
+      </div>
+    </div>
+
+    <script>
+      // Update current time with Vietnam timezone
+      function updateTime() {
+        const now = new Date();
+        const vietnamTime = now.toLocaleString("vi-VN", {
+          timeZone: "Asia/Ho_Chi_Minh",
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+        });
+        document.getElementById("time").textContent = vietnamTime;
+      }
+      updateTime();
+      setInterval(updateTime, 1000);
+
+      // Update domain and connection info
+      function updateDomainInfo() {
+        const hostname = window.location.hostname;
+        const protocol = window.location.protocol;
+        const port = window.location.port;
+
+        // Update current URL
+        document.getElementById(
+          "current-url"
+        ).innerHTML = `<a href="${window.location.href}" target="_blank" style="color: white; text-decoration: underline;">${window.location.href}</a>`;
+
+        // SSL status
+        const sslStatus =
+          protocol === "https:" ? "✅ HTTPS Enabled" : "⚠️ HTTP Only";
+        document.getElementById("ssl-status").textContent = sslStatus;
+
+        // Tunnel setup status based on hostname
+        let tunnelStatus = "";
+        if (
+          hostname === "nhtan.io.vn" ||
+          hostname === "www.nhtan.io.vn" ||
+          hostname === "api.nhtan.io.vn"
+        ) {
+          tunnelStatus = "✅ Complete - Domain Active";
+        } else if (hostname.includes("trycloudflare.com")) {
+          tunnelStatus = "🔄 Temporary Tunnel Active";
+        } else if (hostname.includes("192.168") || hostname === "localhost") {
+          tunnelStatus = "🏠 Local Access - Tunnel Setup Needed";
+        } else {
+          tunnelStatus = "⚠️ Unknown Status";
+        }
+        document.getElementById("tunnel-setup-status").textContent =
+          tunnelStatus;
+
+        // Update port
+        document.getElementById("port").textContent =
+          port || (protocol === "https:" ? "443" : "80");
+      }
+
+      // Check server health and update uptime
+      function checkServerHealth() {
+        fetch("/api/health")
+          .then((response) => response.json())
+          .then((data) => {
+            // Update status
+            document.getElementById("server-status").textContent =
+              "✅ Server đang hoạt động";
+
+            // Update uptime
+            const uptimeSeconds = Math.floor(data.uptime);
+            const hours = Math.floor(uptimeSeconds / 3600);
+            const minutes = Math.floor((uptimeSeconds % 3600) / 60);
+            const seconds = uptimeSeconds % 60;
+            document.getElementById(
+              "uptime"
+            ).textContent = `${hours}h ${minutes}m ${seconds}s`;
+          })
+          .catch((error) => {
+            document.getElementById("server-status").textContent =
+              "⚠️ Kết nối API thất bại";
+            document.getElementById("uptime").textContent = "N/A";
+          });
+      }
+
+      // Initialize on page load
+      document.addEventListener("DOMContentLoaded", function () {
+        updateDomainInfo();
+        checkServerHealth();
+
+        // Auto refresh every 30 seconds
+        setInterval(checkServerHealth, 30000);
+      });
+    </script>
+  </body>
+</html>
