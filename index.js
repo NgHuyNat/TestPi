@@ -4,88 +4,24 @@ const path = require("path");
 require("dotenv").config();
 
 const app = express();
-const PORT = process.env.PORT || 80;
+const PORT = process.env.PORT || 3000; // Đổi về 3000 cho tunnel
 
 // Middleware
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
-// Serve images from root directory
 app.use(express.static(__dirname));
 
-// Routes
+// Routes - Serve HTML thay vì JSON
 app.get("/", (req, res) => {
-  res.json({
-    message: "Welcome to TestHostPi Node.js Server!",
-    status: "Server is running successfully",
-    timestamp: new Date().toISOString(),
-    version: "1.0.0",
-  });
+  res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
-app.get("/api/health", (req, res) => {
-  res.json({
-    status: "healthy",
-    uptime: process.uptime(),
-    memory: process.memoryUsage(),
-    timestamp: new Date().toISOString(),
-  });
-});
+// ...existing code...
 
-app.get("/api/users", (req, res) => {
-  const users = [
-    { id: 1, name: "John Doe", email: "john@example.com" },
-    { id: 2, name: "Jane Smith", email: "jane@example.com" },
-    { id: 3, name: "Bob Johnson", email: "bob@example.com" },
-  ];
-  res.json(users);
-});
-
-app.post("/api/users", (req, res) => {
-  const { name, email } = req.body;
-
-  if (!name || !email) {
-    return res.status(400).json({
-      error: "Name and email are required",
-    });
-  }
-
-  const newUser = {
-    id: Date.now(),
-    name,
-    email,
-    createdAt: new Date().toISOString(),
-  };
-
-  res.status(201).json({
-    message: "User created successfully",
-    user: newUser,
-  });
-});
-
-// Error handling middleware
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({
-    error: "Something went wrong!",
-    message:
-      process.env.NODE_ENV === "development"
-        ? err.message
-        : "Internal server error",
-  });
-});
-
-// 404 handler
-app.use((req, res) => {
-  res.status(404).json({
-    error: "Route not found",
-    path: req.path,
-  });
-});
-
-app.listen(PORT, "127.0.0.1", () => {
-  console.log(`🚀 Server running on http://127.0.0.1:${PORT}`);
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`🚀 Server running on http://0.0.0.0:${PORT}`);
   console.log(`📱 Local access: http://localhost:${PORT}`);
-  console.log(`🌐 Ready for ngrok tunnel`);
+  console.log(`🌐 Ready for Cloudflare Tunnel`);
 });
